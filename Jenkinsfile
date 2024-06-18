@@ -93,7 +93,7 @@ pipeline {
                     steps {
                         dir('techy_store_frontend') {
                             timeout(time: 10, unit: 'MINUTES') {
-                                sh 'DOCKER_BUILDKIT=1 docker build . -t techy-store-front'
+                                sh 'docker build . -t techy-store-front'
                             }
                         }
                     }
@@ -102,7 +102,7 @@ pipeline {
                     steps {
                         dir('techy_store_backend') {
                             timeout(time: 10, unit: 'MINUTES') {
-                                sh 'DOCKER_BUILDKIT=1 docker build . -t techy-store-back'
+                                sh 'docker build . -t techy-store-back'
                             }
                         }
                     }
