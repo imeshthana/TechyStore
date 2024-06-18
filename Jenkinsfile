@@ -10,14 +10,14 @@ pipeline {
             parallel {
                 stage('Checkout Frontend') {
                     steps {
-                        dir('techy-store-frontend') {
+                        dir('techy_store_frontend') {
                             git branch: 'main', url: "${env.GITHUB_REPO_URL}"
                         }
                     }
                 }
                 stage('Checkout Backend') {
                     steps {
-                        dir('techy-store-backend') {
+                        dir('techy_store_backend') {
                             git branch: 'main', url: "${env.GITHUB_REPO_URL}"
                         }
                     }
@@ -28,14 +28,14 @@ pipeline {
             parallel {
                 stage('Build Frontend') {
                     steps {
-                        dir('techy-store-frontend') {
+                        dir('techy_store_frontend') {
                             sh 'docker build . -t techy-store-front'
                         }
                     }
                 }
                 stage('Build Backend') {
                     steps {
-                        dir('techy-store-backend') {
+                        dir('techy_store_backend') {
                             sh 'docker build . -t techy-store-back'
                         }
                     }
