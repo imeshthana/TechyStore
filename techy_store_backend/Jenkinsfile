@@ -1,0 +1,31 @@
+
+pipeline {
+    agent any
+
+    environment {
+        GITHUB_REPO_URL = 'https://github.com/imeshthana/TechyStore.git'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: "${env.GITHUB_REPO_URL}"
+                dir('techy-store-backend') {
+                    git branch: 'main', url: "${env.GITHUB_REPO_URL}"
+                }
+            }
+        }
+        stage('Docker Build') {
+            steps {
+                dir('techy-store-backend') {
+                    sh 'docker build . -t techy-store-back'
+                }            }
+        }
+        stage('Run Docker Image') {
+            steps {
+                sh 'docker run -d --name techy-store-back -p 3001:3001 techy-store-back'
+            }
+        }
+    }
+    
+}
