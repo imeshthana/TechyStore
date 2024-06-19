@@ -132,13 +132,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Frontend') {
-            steps {
-                dir('techy_store_frontend') {
-                    git branch: 'main', url: "${env.GITHUB_REPO_URL}"
-                }
-            }
-        }
         stage('Checkout Backend') {
             steps {
                 dir('techy_store_backend') {
@@ -146,10 +139,10 @@ pipeline {
                 }
             }
         }
-        stage('Build Frontend') {
+        stage('Checkout Frontend') {
             steps {
                 dir('techy_store_frontend') {
-                    sh 'docker build . -t techy-store-front'
+                    git branch: 'main', url: "${env.GITHUB_REPO_URL}"
                 }
             }
         }
@@ -160,14 +153,21 @@ pipeline {
                 }
             }
         }
-        stage('Run Frontend') {
+        stage('Build Frontend') {
             steps {
-                sh 'docker run -d --name techy-store-front -p 3000:3000 techy-store-front'
+                dir('techy_store_frontend') {
+                    sh 'docker build . -t techy-store-front'
+                }
             }
         }
         stage('Run Backend') {
             steps {
                 sh 'docker run -d --name techy-store-back -p 3001:3001 techy-store-back'
+            }
+        }
+        stage('Run Frontend') {
+            steps {
+                sh 'docker run -d --name techy-store-front -p 3000:3000 techy-store-front'
             }
         }
     }
