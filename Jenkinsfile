@@ -1,5 +1,3 @@
-
-
 pipeline {
     agent any
 
@@ -31,16 +29,14 @@ pipeline {
                 stage('Build Frontend') {
                     steps {
                         dir('techy_store_frontend') {
-                                sh 'docker build . -t techy-store-front'
-                            
+                            sh 'docker build . -t techy-store-front'
                         }
                     }
                 }
                 stage('Build Backend') {
                     steps {
                         dir('techy_store_backend') {
-                                sh 'docker build . -t techy-store-back'
-                            
+                            sh 'docker build . -t techy-store-back'
                         }
                     }
                 }
@@ -50,16 +46,25 @@ pipeline {
             parallel {
                 stage('Run Frontend') {
                     steps {
-                        sh 'docker run -d --name techy-store-front -p 3000:3000 techy-store-front'
+                        script {
+                            sh '''
+                                docker rm -f techy-store-front || true
+                                docker run -d --name techy-store-front -p 3000:3000 techy-store-front
+                            '''
+                        }
                     }
                 }
                 stage('Run Backend') {
                     steps {
-                        sh 'docker run -d --name techy-store-back -p 3001:3001 techy-store-back'
+                        script {
+                            sh '''
+                                docker rm -f techy-store-back || true
+                                docker run -d --name techy-store-back -p 3001:3001 techy-store-back
+                            '''
+                        }
                     }
                 }
             }
         }
     }
 }
-
