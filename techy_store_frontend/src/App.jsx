@@ -13,7 +13,6 @@ function App() {
         <Route path='/' element={<Home />}/>
         <Route path='/dashboard' element={<DashBoard />}/>
         <Route path='/cart' element={<Cart />}/>
-        {/* <Route path='/?userName=${userName}&password=${password}' element={<Cart />}/> */}
         <Route path='/dashboard/adminMessages' element={<AdminMeassages />}/>
         <Route path='/dashboard/adminOrders' element={<AdminOrders />}/>
         <Route path='/dashboard/adminReviews' element={<AdminReviews />}/>    
